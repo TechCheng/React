@@ -9,7 +9,7 @@ import TotalPrice from '../components/TotalPrice'
 import CreateBtn from '../components/CreateBtn'
 import ViewTab from '../components/ViewTab'
 
-const categories = {
+export const categories = {
   "1": {
     "type": TYPE_INCOME,
     "name": "旅行",
@@ -26,7 +26,7 @@ const categories = {
     "iconName": "ios-plane"
   }
 }
-const items = [
+export const items = [
   {
     "id": 1,
     "title": "去云南旅游",
