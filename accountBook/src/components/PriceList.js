@@ -2,8 +2,6 @@ import React from 'react'
 import Ionicon from 'react-ionicons'
 import PropTypes from 'prop-types'
 import { Colors } from '../utility'
-
-
 const PriceList = ({ items, onModifyItem, onDeleteItem }) => {
   return (
     <ul className="list-group list-group-flush">
