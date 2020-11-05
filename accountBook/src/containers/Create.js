@@ -4,11 +4,14 @@ import { withRouter } from 'react-router-dom'
 import CategorySelect from '../components/CategorySelect'
 import { Tabs, Tab } from '../components/Tabs'
 import PriceForm from '../components/PriceForm'
-import Loader from '../components/Loader'
+import { testCategories } from '../testData'
+// import Loader from '../components/Loader'
 import { TYPE_INCOME, TYPE_OUTCOME } from '../utility'
-import withContext from '../WithContext'
+import { AppContext } from '../App'
+// import withContext from '../WithContext'
+
 const tabsText = [TYPE_OUTCOME, TYPE_INCOME]
-export class CreatePage extends React.Component {
+class Create extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -18,14 +21,14 @@ export class CreatePage extends React.Component {
     }
   }
   componentDidMount() {
-    const { id } = this.props.match.params
-    this.props.actions.getEditData(id).then(data => {
-      const { editItem, categories } = data
-      this.setState({
-        selectedTab: (id && editItem) ? categories[editItem.cid].type : TYPE_OUTCOME,
-        selectedCategory: (id && editItem) ? categories[editItem.cid] : null,        
-      })
-    })
+    // const { id } = this.props.match.params
+    // this.props.actions.getEditData(id).then(data => {
+    //   const { editItem, categories } = data
+    //   this.setState({
+    //     selectedTab: (id && editItem) ? categories[editItem.cid].type : TYPE_OUTCOME,
+    //     selectedCategory: (id && editItem) ? categories[editItem.cid] : null,
+    //   })
+    // })
   }
   tabChange = (index) => {
     this.setState({
@@ -47,7 +50,7 @@ export class CreatePage extends React.Component {
       })
       return
     }
-    if(!isEditMode) {
+    if (!isEditMode) {
       // create
       this.props.actions.createItem(data, this.state.selectedCategory.id).then(this.navigateToHome)
     } else {
@@ -55,54 +58,52 @@ export class CreatePage extends React.Component {
       this.props.actions.updateItem(data, this.state.selectedCategory.id).then(this.navigateToHome)
     }
     this.props.history.push('/')
-    
+
   }
   navigateToHome = () => {
     this.props.history.push('/')
   }
+
   render() {
-    const { data } = this.props
-    const { items, categories } = data
-    const { id } = this.props.match.params
-    const editItem = (id && items[id]) ? items[id] : {}
-    const { selectedTab, selectedCategory, validationPassed } = this.state
-    const filterCategories = Object.keys(categories)
-    .filter(id => categories[id].type === selectedTab)
-    .map(id => categories[id])
-    const tabIndex = tabsText.findIndex(text => text === selectedTab)
+    const { tabIndex, selectedCategory, validationPassed } = this.state
+    const filterCategories = testCategories.filter(item => item.type === TYPE_INCOME)
     return (
-      <div className="create-page py-3 px-3 rounded mt-3" style={{background: '#fff'}}>
-        { data.isLoading &&
-          <Loader />
+      < AppContext.Consumer >
+        {
+          ({ state }) => {
+            console.log('【state】', state)
+            return <div className="create-page py-3 px-3 rounded mt-3" style={{ background: '#fff' }}>
+              <Tabs activeIndex={tabIndex} onTabChange={this.tabChange}>
+                <Tab>支出</Tab>
+                <Tab>收入</Tab>
+              </Tabs>
+              <CategorySelect categories={filterCategories}
+                onSelectCategory={this.selectCategory}
+                selectedCategory={selectedCategory}
+              />
+              <PriceForm
+                onFormSubmit={this.submitForm}
+                onCancelSubmit={this.cancelSubmit}
+              // item={editItem}
+              />
+              {!validationPassed &&
+                <div className="alert alert-danger mt-5" role="alert">
+                  请选择分类信息
+            </div>
+              }
+            </div>
+          }
         }
-        <Tabs activeIndex={tabIndex} onTabChange={this.tabChange}>
-          <Tab>支出</Tab>
-          <Tab>收入</Tab>
-        </Tabs>
-        <CategorySelect categories={filterCategories} 
-          onSelectCategory={this.selectCategory}
-          selectedCategory={selectedCategory}
-        />
-        <PriceForm 
-          onFormSubmit={this.submitForm}
-          onCancelSubmit={this.cancelSubmit}
-          item={editItem}
-        />
-        { !validationPassed &&
-          <div className="alert alert-danger mt-5" role="alert">
-            请选择分类信息
-          </div>
-        }
-      </div>
+      </AppContext.Consumer>
     )
   }
 }
 
-CreatePage.propTypes = {
+Create.propTypes = {
   data: PropTypes.object.isRequired,
   actions: PropTypes.object.isRequired,
   history: PropTypes.object,
   match: PropTypes.object,
 }
 
-export default withRouter(withContext(CreatePage))
+export default withRouter(Create)

@@ -10,7 +10,7 @@ export const padLeft = (n) => {
 
 export const range = (size, startAt = 0) => {
   const arr = []
-  for(let i = 0; i < size; i++) {
+  for (let i = 0; i < size; i++) {
     arr[i] = startAt + i
   }
   return arr
@@ -25,10 +25,10 @@ export const parseToYearAndMonth = (str) => {
 }
 export const isValidDate = (dateString) => {
   const regEx = /^\d{4}-\d{2}-\d{2}$/;
-  if(!dateString.match(regEx)) return false;  // Invalid format
+  if (!dateString.match(regEx)) return false;  // Invalid format
   const d = new Date(dateString);
-  if(Number.isNaN(d.getTime())) return false; // Invalid date
-  return d.toISOString().slice(0,10) === dateString;
+  if (Number.isNaN(d.getTime())) return false; // Invalid date
+  return d.toISOString().slice(0, 10) === dateString;
 }
 
 export const flatternArr = (arr) => {

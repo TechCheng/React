@@ -8,6 +8,9 @@ import MonthPicker from '../components/MonthPicker'
 import TotalPrice from '../components/TotalPrice'
 import CreateBtn from '../components/CreateBtn'
 import ViewTab from '../components/ViewTab'
+import { Tabs, Tab } from '../components/Tabs'
+import { withRouter } from 'react-router-dom'
+import WithContext from '../WithContext'
 
 export const categories = {
   "1": {
@@ -49,6 +52,8 @@ const newItem = {
   "date": "2020-12-10",
   "cid": '3'
 }
+
+const tabText = [LIST_VIEW, CHART_VIEW]
 class Home extends Component {
   constructor(props) {
     super(props)
@@ -93,6 +98,7 @@ class Home extends Component {
   }
 
   render() {
+    console.log(this.props.data)
     const { items, currentDate, tabView } = this.state
     const itemsWithCategory = items.map(item => {
       item.category = categories[item.cid]
@@ -115,10 +121,25 @@ class Home extends Component {
           income={totalIncome}
           outcome={totalOutcome}
         />
-        <ViewTab
-          activeTab={tabView}
-          onTabChange={this.changeView}
-        />
+        <Tabs activeIndex={tabText.findIndex(item => item == tabView)}
+          onTabChange={(index) => this.setState({
+            tabView: tabText[index]
+          })}>
+          <Tab><Ionicon
+            className="rounded-circle mr-2"
+            fontSize="25px"
+            color={'#007bff'}
+            icon='ios-paper'
+          />
+            列表模式 </Tab>
+          <Tab><Ionicon
+            className="rounded-circle mr-2"
+            fontSize="25px"
+            color={'#007bff'}
+            icon='ios-pie'
+          />
+            图表模式</Tab>
+        </Tabs>
         <MonthPicker
           year={currentDate.year}
           month={currentDate.month}
@@ -143,4 +164,4 @@ class Home extends Component {
   }
 }
 
-export default Home;
+export default WithContext(withRouter(Home));
