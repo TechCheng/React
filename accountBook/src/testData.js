@@ -47,8 +47,8 @@ export const testItems = [
   {
     "title": "buy stuff for kitten",
     "price": 100,
-    "date": "2018-08-15",
-    "monthCategory": "2018-8",
+    "date": "2020-11-15",
+    "monthCategory": "2020-11",
     "id": "_kly1klf4g",
     "cid": "1",
     "timestamp": 1534291200000
@@ -56,8 +56,8 @@ export const testItems = [
   {
     "title": "这是我的工资",
     "price": 20000,
-    "date": "2018-08-18",
-    "monthCategory": "2018-8",
+    "date": "2020-11-18",
+    "monthCategory": "2020-11",
     "id": "_bd16bjeen",
     "cid": "2",
     "timestamp": 1534550400000

@@ -70,39 +70,44 @@ class Home extends Component {
     })
   }
   changeDate = (year, month) => {
-    this.setState({
-      currentDate: { year, month }
-    })
+    // this.setState({
+    //   currentDate: { year, month }
+    // })
   }
   createItem = () => {
-    this.setState({
-      items: [newItem, ...this.state.items]
-    })
+    // this.setState({
+    //   items: [newItem, ...this.state.items]
+    // })
+    this.props.history.push('/create')
   }
-  modifyItem = (modifyItem) => {
-    const modifyItems = this.state.items.map(item => {
-      if (item.id == modifyItem.id) {
-        return { ...item, 'title': '修改后的数据' }
-      } else {
-        return item
-      }
-    })
-    this.setState({
-      items: modifyItems
-    })
+  modifyItem = (item) => {
+    // const modifyItems = this.state.items.map(item => {
+    //   if (item.id == modifyItem.id) {
+    //     return { ...item, 'title': '修改后的数据' }
+    //   } else {
+    //     return item
+    //   }
+    // })
+    // this.setState({
+    //   items: modifyItems
+    // })
+    this.props.history.push(`/edit/${item.id}`)
   }
-  deleteItem = (deleteItem) => {
-    this.setState({
-      items: this.state.items.filter(item => item.id !== deleteItem.id)
-    })
+  deleteItem = (item) => {
+    // this.setState({
+    //   items: this.state.items.filter(item => item.id !== deleteItem.id)
+    // })
+    const { deleteItem } = this.props.action
+    deleteItem(item.id)
   }
 
   render() {
-    console.log(this.props.data)
-    const { items, currentDate, tabView } = this.state
-    const itemsWithCategory = items.map(item => {
-      item.category = categories[item.cid]
-      return item
+    const { currentDate, tabView } = this.state
+    const { items, categories } = this.props.data
+
+    const itemsWithCategory = Object.keys(items).map(id => {
+      items[id].category = categories[items[id].cid]
+      return items[id]
     }).filter(item => {
       return item.date.includes(`${currentDate.year}-${padLeft(currentDate.month)}`)
     })

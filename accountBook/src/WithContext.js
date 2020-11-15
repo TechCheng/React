@@ -12,8 +12,8 @@ export default function WithContext(Component) {
       return (
         < AppContext.Consumer >
           {
-            ({ state }) => {
-              return <Component {...this.props} data={state} />
+            ({ state, action }) => {
+              return <Component {...this.props} data={state} action={action} />
             }
           }
         </AppContext.Consumer>

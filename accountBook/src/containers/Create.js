@@ -4,11 +4,10 @@ import { withRouter } from 'react-router-dom'
 import CategorySelect from '../components/CategorySelect'
 import { Tabs, Tab } from '../components/Tabs'
 import PriceForm from '../components/PriceForm'
-import { testCategories } from '../testData'
 // import Loader from '../components/Loader'
-import { TYPE_INCOME, TYPE_OUTCOME } from '../utility'
+import { TYPE_INCOME, TYPE_OUTCOME, ID } from '../utility'
 import { AppContext } from '../App'
-// import withContext from '../WithContext'
+import WithContext from '../WithContext'
 
 const tabsText = [TYPE_OUTCOME, TYPE_INCOME]
 class Create extends React.Component {
@@ -52,26 +51,28 @@ class Create extends React.Component {
     }
     if (!isEditMode) {
       // create
-      this.props.actions.createItem(data, this.state.selectedCategory.id).then(this.navigateToHome)
+      this.props.action.createItem(data, this.state.selectedCategory.id)
     } else {
       // update 
-      this.props.actions.updateItem(data, this.state.selectedCategory.id).then(this.navigateToHome)
+      this.props.action.updateItem(data, this.state.selectedCategory.id)
     }
     this.props.history.push('/')
-
   }
+
   navigateToHome = () => {
     this.props.history.push('/')
   }
 
   render() {
-    const { tabIndex, selectedCategory, validationPassed } = this.state
-    const filterCategories = testCategories.filter(item => item.type === TYPE_INCOME)
+    const { tabIndex, selectedCategory, validationPassed, selectedTab } = this.state
+    const { items, categories } = this.props.data
+
+    const filterCategories = Object.keys(categories)
+      .filter(id => categories[id].type == selectedTab).map(id => categories[id])
     return (
       < AppContext.Consumer >
         {
           ({ state }) => {
-            console.log('【state】', state)
             return <div className="create-page py-3 px-3 rounded mt-3" style={{ background: '#fff' }}>
               <Tabs activeIndex={tabIndex} onTabChange={this.tabChange}>
                 <Tab>支出</Tab>
@@ -106,4 +107,4 @@ Create.propTypes = {
   match: PropTypes.object,
 }
 
-export default withRouter(Create)
+export default WithContext(withRouter(Create))

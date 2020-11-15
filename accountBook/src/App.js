@@ -16,12 +16,35 @@ class App extends Component {
       items: flatternArr(testItems),
       categories: flatternArr(testCategories)
     }
+    this.action = {
+
+      createItem: (data, categoryId) => {
+        const newId = ID()
+        const parsedDate = parseToYearAndMonth(data.date)
+        data.monthCategory = `${parsedDate.year}-${parsedDate.month}`
+        data.timestamp = new Date(data.date).getTime()
+        const newItem = { ...data, id: newId, cid: categoryId }
+        this.setState({
+          items: { ...this.state.items, [newId]: newItem }
+        })
+      },
+
+      deleteItem: (item) => {
+        delete this.state.items[item]
+        this.setState({
+          items: this.state.items
+        })
+      }
+    }
   }
   render() {
     return (
-      <AppContext.Provider value={{
-        state:this.state
-      }}>
+      <AppContext.Provider
+        value={{
+          state: this.state,
+          action: this.action
+        }}
+      >
         <Router>
           <div className="App">
             <div className="container pb-5">
