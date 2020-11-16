@@ -59,9 +59,12 @@ class Home extends Component {
     super(props)
     this.state = {
       items,
-      currentDate: parseToYearAndMonth(),
       tabView: LIST_VIEW
     }
+  }
+
+  componentDidMount() {
+    this.props.action.getInitalData()
   }
 
   changeView = (view) => {
@@ -70,9 +73,7 @@ class Home extends Component {
     })
   }
   changeDate = (year, month) => {
-    // this.setState({
-    //   currentDate: { year, month }
-    // })
+    this.props.action.selectNewMonth(year, month)
   }
   createItem = () => {
     // this.setState({
@@ -102,14 +103,12 @@ class Home extends Component {
   }
 
   render() {
-    const { currentDate, tabView } = this.state
-    const { items, categories } = this.props.data
+    const { tabView } = this.state
+    const { items, categories, currentDate } = this.props.data
 
     const itemsWithCategory = Object.keys(items).map(id => {
       items[id].category = categories[items[id].cid]
       return items[id]
-    }).filter(item => {
-      return item.date.includes(`${currentDate.year}-${padLeft(currentDate.month)}`)
     })
     let totalIncome = 0, totalOutcome = 0
     itemsWithCategory.forEach(item => {

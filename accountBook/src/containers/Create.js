@@ -13,10 +13,11 @@ const tabsText = [TYPE_OUTCOME, TYPE_INCOME]
 class Create extends React.Component {
   constructor(props) {
     super(props)
+    const { items, categories } = props.data
+    const { id } = props.match.params
     this.state = {
-      selectedTab: TYPE_OUTCOME,
-      selectedCategory: null,
-      validationPassed: true,
+      selectedTab: (id && items[id]) ? categories[items[id].cid].type : TYPE_OUTCOME,
+      selectedCategory: (id && items[id]) ? categories[items[id].cid] : null,
     }
   }
   componentDidMount() {
@@ -64,11 +65,13 @@ class Create extends React.Component {
   }
 
   render() {
-    const { tabIndex, selectedCategory, validationPassed, selectedTab } = this.state
+    const { selectedCategory, validationPassed, selectedTab } = this.state
     const { items, categories } = this.props.data
-
+    const { id } = this.props.match.params
+    const editItem = (id && items[id]) ? items[id] : {}
     const filterCategories = Object.keys(categories)
       .filter(id => categories[id].type == selectedTab).map(id => categories[id])
+    const tabIndex = tabsText.findIndex(text => text === selectedTab)
     return (
       < AppContext.Consumer >
         {
@@ -85,7 +88,7 @@ class Create extends React.Component {
               <PriceForm
                 onFormSubmit={this.submitForm}
                 onCancelSubmit={this.cancelSubmit}
-              // item={editItem}
+                item={editItem}
               />
               {!validationPassed &&
                 <div className="alert alert-danger mt-5" role="alert">
