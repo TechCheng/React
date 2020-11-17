@@ -21,14 +21,14 @@ class Create extends React.Component {
     }
   }
   componentDidMount() {
-    // const { id } = this.props.match.params
-    // this.props.actions.getEditData(id).then(data => {
-    //   const { editItem, categories } = data
-    //   this.setState({
-    //     selectedTab: (id && editItem) ? categories[editItem.cid].type : TYPE_OUTCOME,
-    //     selectedCategory: (id && editItem) ? categories[editItem.cid] : null,
-    //   })
-    // })
+    const { id } = this.props.match.params
+    this.props.action.getEditData(id).then(data => {
+      const { editItem, categories } = data
+      this.setState({
+        selectedTab: (id && editItem) ? categories[editItem.cid].type : TYPE_OUTCOME,
+        selectedCategory: (id && editItem) ? categories[editItem.cid] : null,
+      })
+    })
   }
   tabChange = (index) => {
     this.setState({

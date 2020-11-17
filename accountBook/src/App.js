@@ -54,7 +54,38 @@ class App extends Component {
         })
         return newItem.data
       }),
+      getEditData: withLoading(async (id) => {
+        const { items, categories } = this.state
+        let promiseArr = []
+        if (Object.keys(categories).length === 0) {
+          promiseArr.push(axios.get('/categories'))
+        }
+        const itemAlreadyFetched = !!(Object.keys(items).indexOf(id) > -1)
+        if (id && !itemAlreadyFetched) {
+          const getURLWithID = `/items/${id}`
+          promiseArr.push(axios.get(getURLWithID))
+        }
+        const [fetchedCategories, editItem] = await Promise.all(promiseArr)
 
+        const finalCategories = fetchedCategories ? flatternArr(fetchedCategories.data) : categories
+        const finalItem = editItem ? editItem.data : items[id]
+        if (id) {
+          this.setState({
+            categories: finalCategories,
+            isLoading: false,
+            items: { ...this.state.items, [id]: finalItem },
+          })
+        } else {
+          this.setState({
+            categories: finalCategories,
+            isLoading: false,
+          })
+        }
+        return {
+          categories: finalCategories,
+          editItem: finalItem,
+        }
+      }),
       updateItem: withLoading(async (item, updatedCategoryId) => {
         const modifiedItem = {
           ...item,
