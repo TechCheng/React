@@ -12,3 +12,6 @@ Hooks学习
 
 ## accountBook 
 React16组件化+测试+全流程 实战“在线账本”项目
+
+## redux 
+redux学习
