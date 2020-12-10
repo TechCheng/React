@@ -1,13 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './App';
 import reportWebVitals from './reportWebVitals';
-import Counter from './componets/Counter';
+import IndexPage from './pages/index'
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
-    {/* <Counter /> */}
+    <IndexPage />
   </React.StrictMode>,
   document.getElementById('root')
 );
