@@ -40,7 +40,7 @@ class TodoList extends React.Component {
   }
 
   componentDidMount() {
-    axios.get('http://192.168.3.4:3000/list.json').then((res) => {
+    axios.get('/list').then((res) => {
       const data = res.data
       console.log('[data]',data)
       const action = initListAction(data)
