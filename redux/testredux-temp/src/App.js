@@ -42,7 +42,7 @@ class TodoList extends React.Component {
   componentDidMount() {
     axios.get('/list').then((res) => {
       const data = res.data
-      console.log('[data]',data)
+      console.log('[data]', data)
       const action = initListAction(data)
       store.dispatch(action)
     })
