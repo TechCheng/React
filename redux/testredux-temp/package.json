@@ -8,6 +8,7 @@
     "@testing-library/user-event": "^12.1.10",
     "antd": "^4.9.2",
     "axios": "^0.21.0",
+    "concurrently": "^5.3.0",
     "json-server": "^0.16.3",
     "qs": "^6.9.4",
     "react": "^17.0.1",
@@ -19,7 +20,7 @@
     "web-vitals": "^0.2.4"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "concurrently \"react-scripts start\" \"npm run mock\"",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
