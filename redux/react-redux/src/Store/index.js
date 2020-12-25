@@ -1,6 +1,10 @@
-import { createStore } from 'redux' // 引入一个第三方的方法
+import { createStore, applyMiddleware } from 'redux'
 import reducer from './reducer'
+import thunk from 'redux-thunk'
 
-const store = createStore(reducer) // 创建数据的公共存储区域（管理员）
+const store = createStore(
+  reducer,
+  applyMiddleware(thunk)
+)
 
 export default store
