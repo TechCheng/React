@@ -1,14 +1,14 @@
 import React from 'react'
 import store from './Store'
 import axios from 'axios'
-import { Provider } from 'react-redux'
 import {
   initListAction,
   getInputChangeAction,
   getBtnClickAction,
   getItemDeleteAction
 } from './Store/actionCreator';
-import TodoListUI from './componets/TodoListUI';
+import { Provider } from 'react-redux'
+import { TodoListUI } from './componets/TodoListUI';
 
 class TodoList extends React.Component {
 

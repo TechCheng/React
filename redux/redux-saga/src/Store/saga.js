@@ -1,4 +1,4 @@
-import { takeEvery, put  } from 'redux-saga/effects'
+import { takeEvery, put } from 'redux-saga/effects'
 import { GET_INIT_LIST } from './actionType'
 import { initListAction } from './actionCreator'
 import axios from 'axios'
@@ -8,7 +8,7 @@ function* getInitList() {
     const res = yield axios.get('list')
     const action = initListAction(res.data)
     yield put(action)
-  } catch(e) {
+  } catch (e) {
     console.log('list.json 网络请求失败')
   }
 }

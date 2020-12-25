@@ -1,6 +1,6 @@
 import React from 'react'
 import { Input, Button, List } from 'antd'
-import { connect } from 'react-redux'
+
 
 const TodoListUI = (props) => {
   return (
@@ -25,28 +25,7 @@ const TodoListUI = (props) => {
   )
 }
 
-const mapStateToProps = (state) => {
-  return {
-    inputValue: state.inputValue
-  }
-}
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    handleInputChange(e) {
-      const action = {
-        type: 'change_input_value',
-        value: e.target.value
-      }
-      dispatch(action)
-    },
-    handleClick() {
-      const action = {
-        type: 'add_todo_item'
-      }
-      dispatch(action)
-    }
-  }
+export {
+  TodoListUI
 }
-
-export default connect(mapStateToProps, mapDispatchToProps)(TodoListUI)
