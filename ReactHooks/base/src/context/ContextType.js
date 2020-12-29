@@ -1,14 +1,14 @@
 import React, { createContext } from 'react';
 
-const BatteryContext = createContext(90)
+const BatteryContext = createContext(90)  // 步骤1
 const OnlineContext = createContext()
 
 
 class Leaf extends React.Component {
-  static contextType = BatteryContext
+  static contextType = BatteryContext   // 步骤2
   static contextType = BatteryContext
   render() {
-    const battery = this.context
+    const battery = this.context   // 步骤3
     return (
       <React.Fragment>
         <h1>Battery: {battery}</h1>
@@ -57,4 +57,4 @@ class App extends React.Component {
 
 }
 
-export default App;
+export default Context;
