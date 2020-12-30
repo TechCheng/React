@@ -4,22 +4,52 @@ import './index.css';
 import reportWebVitals from './reportWebVitals';
 
 /* Context ContextType */
-import Context from './context/Context';
+import Context from './1.context/Context';
 // import ContextType from './context/ContextType';
 
 /* Lazy Suspense */
-import Lazy from './lazy/index'
+import Lazy from './2.lazy/index'
 
 /* memo */
-import Memo from './memo/index'
+import Memo from './3.memo/index'
+
+/* useState */
+import UseState from './4.Hooks/1.useState'
+
+/* useEffect */
+import UseEffect from './4.Hooks/2.useEffect'
+
+/* useContext */
+import UseContext from './4.Hooks/3.useContext'
+
+/* memo callback */
+import MemoCall from './4.Hooks/4.memo&&callback'
+
+/* useRef */
+import UseRef from './4.Hooks/5.useRef'
+
+/* useContext */
+import DiyHooks from './4.Hooks/6.diyHooks'
 
 ReactDOM.render(
   <React.StrictMode>
     {/* <Context /> */}
 
     {/* <Lazy/> */}
-    
-    <Memo/>
+
+    {/* <Memo/> */}
+
+    {/* <UseState/> */}
+
+    {/* <UseContext/> */}
+
+    {/* <UseEffect/> */}
+
+    {/* <MemoCall/> */}
+
+    {/* <UseRef/> */}
+
+    <DiyHooks/>
   </React.StrictMode>,
   document.getElementById('root')
 );
