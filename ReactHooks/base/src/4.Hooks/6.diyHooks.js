@@ -3,7 +3,7 @@ import React, {useEffect, useRef, useState, useCallback} from 'react';
 function useCounter(count) {
   const size = useSize()
   return (
-    <h1>{count} size: {size.width}x{size.height}</h1>
+  <h1>{count} size: {size.width}x{size.height}</h1>
   )
 }
 
@@ -36,11 +36,12 @@ function useSize() {
   })
 
   const onResize = useCallback(() => {
+    console.log('1212')
     setSize({
       width: document.documentElement.clientWidth,
       height: document.documentElement.clientHeight,
     })
-  }, []);
+  },[])
 
   useEffect(() => {
     window.addEventListener('resize', onResize)
@@ -53,10 +54,10 @@ function useSize() {
 }
 
 function App() {
-  const [count, setCount] = useCount(0)
-  const Count = useCounter(count)
-  const size = useSize()
-
+  const [count, setCount] = useCount(0)   //返回处理逻辑
+  const Count = useCounter(count)   //返回JSX
+  const size = useSize()   //返回处理逻辑
+ 
   return (
     <div>
       <button

@@ -20,13 +20,16 @@ function App() {
     return double / 4
   }, [double])
 
+  const onClick = useMemo(()=>{
+    console.log('Click')
+  })
   // 确保 onClick 只有一个句柄，防止每次重新生成函数导致 Counter 重新渲染
-  const onClick = useMemo(() => {
-    return () => {
-      console.log('Click')
-      setClickCount(clickCount => clickCount+1)
-    }
-  }, [])
+  // const onClick = useMemo(() => {
+  //   return () => {
+  //     console.log('Click')
+  //     setClickCount(clickCount => clickCount+1)
+  //   }
+  // }, [])
 
   // 当useMemo返回一个函数时，useCallback与之等效
   // const onClick = useCallback(() => {
