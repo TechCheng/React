@@ -1,68 +1,83 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# 某课网：《React劲爆新特性Hooks 重构去哪儿网火车票PWA》笔记
 
-## Available Scripts
+> 使用命令 `git checkout <commit_id>` 来切换到某一版本，如：`git checkout 88663694cb06811e66a66289aa5b4c7affad72ff`\
+> 也可以使用 gitee 的链接：`https://gitee.com/canwdev/imooc-react-hook-qunar/tree/88663694cb06811e66a66289aa5b4c7affad72ff`
 
-In the project directory, you can run:
+## 第1章 课程简介
 
-### `yarn start`
+（略）
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## [第2章 [操作篇]项目搭建](./docs/chapter02.md)
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+## [第3章 [新特性]React新特性一览](./docs/chapter03.md)
 
-### `yarn test`
+Context、ContextType、Lazy、Suspense、Memo
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## [第4章 [新特性]React颠覆性新特性Hooks](./docs/chapter04.md)
 
-### `yarn build`
+Hook、useState、useEffect、createContext、useContext、useMemo、useCallback、useRef、自定义Hooks
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## [第5章 [新特性]React新特性之Redux](./docs/chapter05.md)
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `yarn eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `yarn build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+## 第6章 [新特性]渐进式Web App
+### 6-1 PWA简介
+### 6-2 服务工作线程：Service Worker
+### 6-3 “承诺”控制流：Promise
+### 6-4 更优雅的请求：fetch
+### 6-5 资源的缓存系统：Cache API
+### 6-6 消息推送：Notification API
+### 6-7 如何在项目中开启PWA
+## 第7章 [项目篇]火车票业务架构
+### 7-1 项目业务选型以及演示分析
+### 7-2 项目模块交互设计演示与分析
+### 7-3 项目工程初始化
+### 7-4 为项目搭建Mock Serve 
+## 第8章 [项目篇]火车票首页
+### 8-1 数据结构与模块设计
+### 8-2 顶部导航栏
+### 8-3 始发终到站
+### 8-4 城市选择浮层-顶部搜索栏
+### 8-5 城市选择浮层-城市的异步加载
+### 8-6 城市选择浮层-渲染城市列表
+### 8-7 城市选择浮层-字母快速定位
+### 8-8 城市选择浮层-搜索建议
+### 8-9 出发日期控件
+### 8-10 日期选择浮层-搭建
+### 8-11 日期选择浮层-日历组件(上)
+### 8-12 日期选择浮层-日历组件(下)
+### 8-13 只看高铁&动车控件
+### 8-14 提交按钮控件
+## 第9章 [项目篇]搜索结果页
+### 9-1 数据结构与模块设计(上)
+### 9-2 数据结构与模块设计(下)
+### 9-3 URL解析与数据请求
+### 9-4 日期导航
+### 9-5 车次列表
+### 9-6 底部筛选按钮栏
+### 9-7 综合筛选浮层-缓存状态(上)
+### 9-8 综合筛选浮层-缓存状态(下)
+### 9-9 综合筛选浮层-时间区间滑块(上)
+### 9-10 综合筛选浮层-时间区间滑块(下)
+### 9-11 综合筛选浮层 - 其他逻辑
+### 9-12 数据联动与缓冲区重构
+## 第10章 [项目篇]座次选择页
+### 10-1 数据结构与模块设计
+### 10-2 URL解析与数据请求
+### 10-3 车次详细信息
+### 10-4 异步加载时刻表(上)
+### 10-5 异步加载时刻表(下)
+### 10-6 车次列表
+## 第11章 [项目篇]订单填写页
+### 11-1 数据结构与模块设计
+### 11-2 URL解析与数据请求
+### 11-3 乘客信息填写(一)
+### 11-4 乘客信息填写(二)
+### 11-5 -1 乘客信息填写(三)
+### 11-6 -2乘客信息填写(四)
+### 11-7 在线选座
+### 11-8 结算提交
+## 第12章 [提高篇]工程优化
+### 12-1 代码规范格式化
+### 12-2 性能与部署
+## 第13章 课程总结
+### 13-1 课程总结
