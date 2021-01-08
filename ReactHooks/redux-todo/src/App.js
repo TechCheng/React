@@ -1,10 +1,26 @@
-import React, { memo, useCallback, useEffect, useRef, useState } from 'react';
+import React, {memo, useCallback, useEffect, useRef, useState} from 'react';
 import './App.css'
+import {createAdd, createRemove, createSet, createToggle} from "./actions"
 
 let idSeq = Date.now()
 
+function bindActionCreators(actionCreators, dispatch) {
+  const ret = {}
+
+  for (let key in actionCreators) {
+    ret[key] = function (...args) {
+      const actionCreator = actionCreators[key]
+      const action = actionCreator(...args)
+      dispatch(action)
+    }
+  }
+
+  // console.log(ret)
+  return ret
+}
+
 const Control = memo(function Control(props) {
-  const { dispatch } = props
+  const {addTodo} = props
   const inputRef = useRef()
 
   // onSubmit 没有向任何子组件传递，所以不需要用 useCallback 包裹
@@ -15,13 +31,10 @@ const Control = memo(function Control(props) {
 
     if (newText.length === 0) return
 
-    dispatch({
-      type: 'add',
-      payload: {
-        id: ++idSeq,
-        text: newText,
-        complete: false
-      }
+    addTodo({
+      id: ++idSeq,
+      text: newText,
+      complete: false
     })
 
     inputRef.current.value = ''
@@ -35,7 +48,7 @@ const Control = memo(function Control(props) {
           ref={inputRef}
           type="text"
           className="new-todo"
-          placeholder="What neesd to be done?" />
+          placeholder="What neesd to be done?"/>
       </form>
     </div>
   )
@@ -45,20 +58,14 @@ const TodoItem = memo(function TodoItem(props) {
   const {
     todo: {
       id, text, complete
-    }, dispatch
+    }, removeTodo, toggleTodo
   } = props
 
   const onChange = () => {
-    dispatch({
-      type: 'toggle',
-      payload: id
-    })
+    toggleTodo(id)
   }
   const onRemove = () => {
-    dispatch({
-      type: 'remove',
-      payload: id
-    })
+    removeTodo(id)
   }
 
   return (
@@ -77,7 +84,7 @@ const TodoItem = memo(function TodoItem(props) {
 })
 
 const Todos = memo(function Todos(props) {
-  const { todos, dispatch } = props
+  const {todos, removeTodo, toggleTodo} = props
   return (
     <ul className="todos">
       {
@@ -85,7 +92,8 @@ const Todos = memo(function Todos(props) {
           return (<TodoItem
             key={todo.id}
             todo={todo}
-            dispatch={dispatch}
+            removeTodo={removeTodo}
+            toggleTodo={toggleTodo}
           />)
         })
       }
@@ -98,7 +106,8 @@ const LS_KEY = '_$-todos_'
 function TodoList() {
   const [todos, setTodos] = useState([]);
 
-  const dispatch = useCallback(({ type, payload }) => {
+  const dispatch = useCallback((action) => {
+    const {type, payload} = action
     switch (type) {
       case 'set':
         setTodos(payload)
@@ -125,7 +134,7 @@ function TodoList() {
   // 载入数据
   useEffect(() => {
     const todos = JSON.parse(localStorage.getItem(LS_KEY) || '[]')
-    setTodos(todos)
+    dispatch(createSet(todos))
   }, [])
 
   // 写入数据
@@ -136,8 +145,22 @@ function TodoList() {
 
   return (
     <div className="todo-list">
-      <Control dispatch={dispatch} />
-      <Todos todos={todos} dispatch={dispatch} />
+      <Control
+        {
+          ...bindActionCreators({
+            addTodo: createAdd
+          }, dispatch)
+        }
+      />
+      <Todos
+        todos={todos}
+        {
+          ...bindActionCreators({
+            removeTodo: createRemove,
+            toggleTodo: createToggle
+          }, dispatch)
+        }
+      />
     </div>
   )
 }
