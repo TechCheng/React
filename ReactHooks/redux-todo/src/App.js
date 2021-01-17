@@ -1,6 +1,6 @@
-import React, {memo, useCallback, useEffect, useRef, useState} from 'react';
+import React, { memo, useCallback, useEffect, useRef, useState } from 'react';
 import './App.css'
-import {createAdd, createRemove, createSet, createToggle} from "./actions"
+import { createAdd, createRemove, createSet, createToggle } from "./store/actions"
 
 let idSeq = Date.now()
 
@@ -14,13 +14,12 @@ function bindActionCreators(actionCreators, dispatch) {
       dispatch(action)
     }
   }
-
-  // console.log(ret)
   return ret
 }
 
+
 const Control = memo(function Control(props) {
-  const {addTodo} = props
+  const { addTodo } = props
   const inputRef = useRef()
 
   // onSubmit 没有向任何子组件传递，所以不需要用 useCallback 包裹
@@ -48,7 +47,7 @@ const Control = memo(function Control(props) {
           ref={inputRef}
           type="text"
           className="new-todo"
-          placeholder="What neesd to be done?"/>
+          placeholder="What neesd to be done?" />
       </form>
     </div>
   )
@@ -84,7 +83,7 @@ const TodoItem = memo(function TodoItem(props) {
 })
 
 const Todos = memo(function Todos(props) {
-  const {todos, removeTodo, toggleTodo} = props
+  const { todos, removeTodo, toggleTodo } = props
   return (
     <ul className="todos">
       {
@@ -105,31 +104,76 @@ const LS_KEY = '_$-todos_'
 
 function TodoList() {
   const [todos, setTodos] = useState([]);
+  const [incrementCount, setIncrementCount] = useState(0);
 
-  const dispatch = useCallback((action) => {
-    const {type, payload} = action
+  function reducer(state, action) {
+    const { type, payload } = action
+    const { todos, incrementCount } = state
+
     switch (type) {
       case 'set':
-        setTodos(payload)
-        break;
-      case 'add':
-        setTodos(todos => [...todos, payload])
-        break;
-      case 'remove':
-        setTodos(todos => todos.filter(todo => todo.id !== payload))
-        break;
-      case 'toggle':
-        setTodos(todos => todos.map(todo => {
-          return todo.id === payload ?
-            {
-              ...todo,
-              complete: !todo.complete
-            } : todo
-        }))
-        break;
-      default:
+        return {
+          ...state,
+          incrementCount: incrementCount + 1,
+          todos: payload
+        }
     }
-  }, [])
+  }
+
+  function reducer(state, action) {
+    const { type, payload } = action
+    const { todos, incrementCount } = state
+    switch (type) {
+      case 'set':
+        return {
+          ...state,
+          todos: payload,
+          incrementCount: incrementCount + 1
+        }
+      case 'add':
+        return {
+          ...state,
+          todos: [...todos, payload],
+          incrementCount: incrementCount + 1
+        }
+      case 'remove':
+        return {
+          ...state,
+          todos: todos.filter(todo => todo.id !== payload)
+        }
+      case 'toggle':
+        return {
+          ...state,
+          todos: todos.map(todo => {
+            return todo.id === payload ?
+              {
+                ...todo,
+                complete: !todo.complete
+              } : todo
+          })
+        }
+    }
+
+    return state
+  }
+
+  const dispatch = useCallback((action) => {
+    const state = {
+      todos,
+      incrementCount
+    }
+    const setters = {
+      todos: setTodos,
+      incrementCount: setIncrementCount
+    }
+
+    const newState = reducer(state,action)
+    
+    for(let key in newState){
+      setters[key](newState[key])
+    }
+
+  }, [todos, incrementCount])
 
   // 载入数据
   useEffect(() => {
@@ -147,18 +191,18 @@ function TodoList() {
     <div className="todo-list">
       <Control
         {
-          ...bindActionCreators({
-            addTodo: createAdd
-          }, dispatch)
+        ...bindActionCreators({
+          addTodo: createAdd
+        }, dispatch)
         }
       />
       <Todos
         todos={todos}
         {
-          ...bindActionCreators({
-            removeTodo: createRemove,
-            toggleTodo: createToggle
-          }, dispatch)
+        ...bindActionCreators({
+          removeTodo: createRemove,
+          toggleTodo: createToggle
+        }, dispatch)
         }
       />
     </div>
