@@ -1,0 +1,28 @@
+<!--
+ * @Descripttion: 
+ * @version: 
+ * @Author: TechCheng
+ * @Date: 2021-01-17 15:49:34
+ * @LastEditors: TechCheng
+ * @LastEditTime: 2021-01-17 17:20:06
+-->
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <link rel="stylesheet" href="index.css">
+</head>
+<body>
+<script>
+  navigator.serviceWorker.register('./sw.js').then(reg => {
+    console.log(reg)
+  }, error => {
+    console.log(error)
+  })
+</script>
+</body>
+</html>
